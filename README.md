@@ -105,13 +105,7 @@ For each verification case, an analytical function $u_{\mathrm{exact}}(x,y)$ is 
 The maximum absolute error is evaluated over the interior grid points:
 
 $$
-E_\infty =
-\max_i
-\left|
-u_i^{\mathrm{numerical}}
--
-u_i^{\mathrm{exact}}
-\right|.
+E_\infty = \max_i \left|u_i^{\mathrm{numerical}} - u_i^{\mathrm{exact}}\right|.
 $$
 
 ### Convergence Results
@@ -302,9 +296,7 @@ The automated tests complement the manufactured-solution verification experiment
 For steady, incompressible single-phase flow in a homogeneous, isotropic porous medium, Darcy's law is:
 
 $$
-\mathbf{v}
-=
--\frac{k}{\mu}\nabla P
+\mathbf{v} = -\frac{k}{\mu}\nabla P
 $$
 
 where:
