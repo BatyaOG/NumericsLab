@@ -80,6 +80,15 @@ def main():
         output_dir / "error_vs_runtime.png"
     )
 
+    plotting.plot_overview(
+        grid,
+        grid_sizes,
+        sine_errors,
+        quartic_errors,
+        median_times,
+        output_dir / "overview.png"
+    )
+
     print("All experiments and figures completed successfully!")
 
 
