@@ -6,6 +6,8 @@ NumericsLab is a scientific Python project demonstrating finite-difference discr
 
 The project focuses on implementing and verifying a numerical PDE solver, with an emphasis on mathematical correctness, transparent testing, and scientific software engineering.
 
+📄 [Read the Technical Report](TECHNICAL_REPORT.md)
+
 ![NumericsLab Overview](figures/overview.png)
 
 ## 1. Mathematical Problem
