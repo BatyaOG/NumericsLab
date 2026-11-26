@@ -31,7 +31,7 @@ def plot_solution_heatmap(grid, filename):
 def plot_convergence(grid_sizes, sine_errors, quartic_errors, filename):
     h = np.array([1 / (n + 1) for n in grid_sizes])
 
-    reference = sine_errors[0] * (h / h[0])**2
+    reference = 1.7*sine_errors[0] * (h / h[0])**2
 
     fig, ax = plt.subplots(figsize=(6, 5))
 
