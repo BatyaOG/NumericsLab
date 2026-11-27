@@ -10,27 +10,18 @@ def main():
 
     print("Running NumericsLab experiments...")
 
-    # 1. Sine convergence
     sine_errors = experiments.run_convergence(
-        grid_sizes,
-        cases.sine_source,
-        cases.zero_boundary,
-        cases.manufactured_exact
+        grid_sizes, cases.sine_source,
+        cases.zero_boundary, cases.manufactured_exact
     )
 
-    # 2. Quartic convergence
     quartic_errors = experiments.run_convergence(
-        grid_sizes,
-        cases.quartic_source,
-        cases.quartic_boundary,
-        cases.quartic_exact
+        grid_sizes, cases.quartic_source,
+        cases.quartic_boundary, cases.quartic_exact
     )
 
-    # 3. Verify quadratic manufactured solution
     u_quadratic = solver.solve_poisson(
-        15,
-        cases.quadratic_source,
-        cases.quadratic_boundary
+        15, cases.quadratic_source, cases.quadratic_boundary
     )
 
     quadratic_error = np.max(
@@ -40,27 +31,19 @@ def main():
     print(f"Quadratic maximum error: {quadratic_error:.3e}")
     assert quadratic_error < 1e-12
 
-    # 4. Benchmark solve-only runtime
     median_times = experiments.benchmark_solve_times(
-        grid_sizes,
-        cases.sine_source,
-        cases.zero_boundary
+        grid_sizes, cases.sine_source, cases.zero_boundary
     )
 
-    # 5. Reconstruct the solution for visualization
     n = 31
-
     u = solver.solve_poisson(
-        n,
-        cases.sine_source,
-        cases.zero_boundary
+        n, cases.sine_source, cases.zero_boundary
     )
 
     grid = solver.reconstruct_solution(
         u, n, cases.zero_boundary
     )
 
-    # 6. Generate scientific figures
     output_dir = Path("figures")
 
     plotting.plot_solution_heatmap(
@@ -68,24 +51,18 @@ def main():
     )
 
     plotting.plot_convergence(
-        grid_sizes,
-        sine_errors,
-        quartic_errors,
+        grid_sizes, sine_errors, quartic_errors,
         output_dir / "convergence.png"
     )
 
     plotting.plot_error_vs_runtime(
-        median_times,
-        sine_errors,
+        median_times, sine_errors,
         output_dir / "error_vs_runtime.png"
     )
 
     plotting.plot_overview(
-        grid,
-        grid_sizes,
-        sine_errors,
-        quartic_errors,
-        median_times,
+        grid, grid_sizes, sine_errors,
+        quartic_errors, median_times,
         output_dir / "overview.png"
     )
 
