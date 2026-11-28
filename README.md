@@ -121,15 +121,17 @@ $$
 
 ### Observed Convergence Orders
 
-For successive grid refinements in which the grid spacing is halved, the observed convergence order is calculated as:
+For successive grid refinements, the observed convergence order is:
 
 $$
-p =
-\log_2
-\left(
-\frac{E_{\mathrm{coarse}}}
-{E_{\mathrm{fine}}}
-\right).
+p = \frac{\ln(E_{\mathrm{coarse}}/E_{\mathrm{fine}})}
+{\ln(h_{\mathrm{coarse}}/h_{\mathrm{fine}})}.
+$$
+
+When the grid spacing is halved, this simplifies to:
+
+$$
+p = \log_2(E_{\mathrm{coarse}}/E_{\mathrm{fine}}).
 $$
 
 | Grid refinement | Sine order | Quartic order |
@@ -164,7 +166,7 @@ For each grid size:
 4. Measure each solve using `time.perf_counter()`.
 5. Report the median execution time.
 
-**The reported benchmark measures sparse solve time only.**
+**Each timed `spsolve(A, b)` call includes sparse factorization and solution.**
 
 Matrix assembly, right-hand-side construction, solution reconstruction, and visualization are excluded from the timing measurements.
 
@@ -278,7 +280,7 @@ NumericsLab/
 
 ### Automated Testing
 
-Six pytest tests cover:
+Eight pytest tests cover:
 
 1. Grid-index mapping
 2. Sparse matrix structure and symmetry
@@ -286,6 +288,8 @@ Six pytest tests cover:
 4. Quadratic manufactured-solution accuracy
 5. Second-order convergence for sine and quartic solutions
 6. Full two-dimensional solution reconstruction
+7. General convergence order for arbitrary refinement ratios
+8. Asymmetric manufactured-solution regression
 
 GitHub Actions is configured to execute the numerical tests automatically on pushes and pull requests.
 

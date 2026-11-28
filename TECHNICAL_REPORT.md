@@ -2,7 +2,9 @@
 
 **Verification and Performance Analysis of a Two-Dimensional Finite-Difference Poisson Solver**
 
-**Date:** November 26, 2026
+**Original date:** November 26, 2026
+
+**Updated:** November 28, 2026
 
 ## Abstract
 
@@ -52,7 +54,14 @@ Three manufactured solutions are evaluated:
 
 The maximum absolute error is calculated over the interior nodes.
 
-The observed convergence order for successive halving of grid spacing is
+The observed convergence order for arbitrary successive grid refinements is
+
+$$
+p=\frac{\ln(E_{\mathrm{coarse}}/E_{\mathrm{fine}})}
+{\ln(h_{\mathrm{coarse}}/h_{\mathrm{fine}})}.
+$$
+
+When the grid spacing is halved, this simplifies to
 
 $$
 p=\log_2(E_{\mathrm{coarse}}/E_{\mathrm{fine}}).
@@ -91,7 +100,7 @@ Performance is measured using the sparse linear-system solution operation.
 
 For each grid resolution, the implementation performs one untimed warm-up solve followed by 20 timed solves. The median elapsed time is used as the representative measurement.
 
-Matrix assembly, right-hand-side construction, reconstruction, and visualization are excluded from timing.
+Matrix assembly, right-hand-side construction, reconstruction, and visualization are excluded from timing. Each timed spsolve(A, b) call includes sparse factorization and solution.
 
 The error-versus-runtime figure illustrates the accuracy–computational-cost tradeoff across the tested grid resolutions.
 
@@ -103,7 +112,7 @@ No asymptotic runtime complexity is inferred from the four measured grid resolut
 
 The implementation separates solver operations, analytical test cases, experiments, plotting, and workflow execution into individual Python modules.
 
-Six pytest tests verify indexing, matrix structure, boundary contributions, polynomial solution accuracy, convergence behavior, and reconstruction.
+The current suite contains eight pytest tests covering indexing, matrix structure, boundary contributions, quadratic accuracy, convergence behavior, solution reconstruction, arbitrary refinement ratios, and an asymmetric manufactured-solution regression.
 
 A fresh Git clone was tested in an isolated Python virtual environment on macOS 15.3 (ARM64), with the following versions:
 
@@ -115,7 +124,9 @@ A fresh Git clone was tested in an isolated Python virtual environment on macOS 
 | Matplotlib | 3.11.2 |
 | pytest | 9.2.0 |
 
-All six tests passed. The full experiment workflow executed successfully and regenerated four scientific figures.
+All six tests in the original November 26 fresh-environment verification passed. The experiment workflow also regenerated four scientific figures.
+
+Following the November 27 improvements, the expanded eight-test suite passed locally, the full experiment pipeline completed successfully, and GitHub Actions passed for commit 490e953.
 
 The repository additionally contains a GitHub Actions workflow for automated testing on an Ubuntu runner.
 
